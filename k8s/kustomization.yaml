@@ -6,7 +6,6 @@ resources:
   - deployment.yaml
   - ingress.yaml
   - managed-certificate.yaml
-  # - secret-provider.yaml
   - service.yaml
 
 images:
