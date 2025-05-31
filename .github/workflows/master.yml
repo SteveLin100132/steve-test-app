@@ -46,6 +46,8 @@ jobs:
   bump-version:
     name: Bump Version and Update GitHub Variable
     runs-on: ubuntu-latest
+    outputs:
+      new_version: ${{ steps.bump.outputs.new_version }}
     needs: unit-test # 等 unit-test 成功才執行
 
     steps:
@@ -94,8 +96,8 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/${{ env.IMAGE_REPO }}/$IMAGE_NAME:$APP_VERSION .
+          docker build -t ghcr.io/${{ env.IMAGE_REPO }}/$IMAGE_NAME:${{ needs.bump-version.outputs.new_version }} .
 
       - name: Push Docker image
         run: |
-          docker push ghcr.io/${{ env.IMAGE_REPO }}/$IMAGE_NAME:$APP_VERSION
+          docker push ghcr.io/${{ env.IMAGE_REPO }}/$IMAGE_NAME:${{ needs.bump-version.outputs.new_version }}
