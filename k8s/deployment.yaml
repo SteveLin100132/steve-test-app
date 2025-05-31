@@ -29,10 +29,10 @@ spec:
             requests:
               cpu: 50m
               memory: 64Mi
-              ephemeral-storage: 16i
+              ephemeral-storage: 16Mi
             limits:
               cpu: 50m
               memory: 64Mi
-              ephemeral-storage: 16i
+              ephemeral-storage: 16Mi
       imagePullSecrets:
         - name: ghcr-secret
