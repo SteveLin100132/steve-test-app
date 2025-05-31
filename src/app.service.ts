@@ -14,6 +14,15 @@ export class AppService {
   constructor(private readonly configService: ConfigService) {}
 
   /**
+   * 從設定服務取得應用程式 ID。
+   *
+   * @returns {string} 如果有設定則回傳應用程式 ID，否則回傳 'not-set'。
+   */
+  getAppId(): string {
+    return this.configService.get<string>('APP_ID', 'not-set');
+  }
+
+  /**
    * 從設定服務取得目前的應用程式版本。
    * 如果未設定版本，則預設為 '1.0.0'。
    *
