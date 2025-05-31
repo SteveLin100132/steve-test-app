@@ -17,7 +17,7 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: steve-test-app-api
-          image: ghcr.io/stevelin100132/steve-test-app:1.0.3
+          image: ghcr.io/stevelin100132/steve-test-app # Use the image from the kustomization.yaml
           ports:
             - containerPort: 3000
           envFrom:
@@ -32,5 +32,16 @@ spec:
               cpu: 100m
               memory: 64Mi
               ephemeral-storage: 128Mi
+            volumeMounts:
+              - name: steve-test-app-api-secret
+                mountPath: "/secrets"
+                readOnly: true
       imagePullSecrets:
         - name: ghcr-secret
+      volumes:
+        - name: steve-test-app-api-secret
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "steve-test-app-api-gsm"
