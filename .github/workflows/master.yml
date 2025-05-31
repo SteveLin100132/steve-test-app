@@ -61,8 +61,8 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/$IMAGE_REPO/$IMAGE_NAME:$APP_VERSION .
+          docker build -t ghcr.io/${{ env.IMAGE_REPO }}/$IMAGE_NAME:$APP_VERSION .
 
       - name: Push Docker image
         run: |
-          docker push ghcr.io/$IMAGE_REPO/$IMAGE_NAME:$APP_VERSION
+          docker push ghcr.io/${{ env.IMAGE_REPO }}/$IMAGE_NAME:$APP_VERSION
