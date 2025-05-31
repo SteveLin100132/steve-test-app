@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: steve-test-app-api
+  labels:
+    app: steve-test-app-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: steve-test-app-api
+  template:
+    metadata:
+      labels:
+        app: steve-test-app-api
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: steve-test-app-api
+          image: ghcr.io/stevelin100132/steve-test-app:1.0.1
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+              ephemeral-storage: 1Gi
+            limits:
+              cpu: 100m
+              memory: 128Mi
+              ephemeral-storage: 1Gi
+      imagePullSecrets:
+        - name: ghcr-secret
