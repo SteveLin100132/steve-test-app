@@ -5,6 +5,12 @@ on:
     branches:
       - 'master'
 
+env:
+  GITHUB_ACTOR: ${{ github.actor }}
+  APP_VERSION: ${{ vars.APP_VERSION }}
+  IMAGE_NAME: ${{ vars.IMAGE_NAME }}
+  IMAGE_REPO: ${GITHUB_ACTOR,,}
+
 jobs:
   unit-test:
     name: Run Unit Test
@@ -53,19 +59,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.CR_PAT }}
 
-      - name: Set image tag
-        id: tag
-        run: echo "TAG=${{ vars.APP_VERSION }}" >> $GITHUB_ENV
-
-      - name: Lowercase github.actor
-        run: echo "LOWER_ACTOR=${GITHUB_ACTOR,,}" >> $GITHUB_ENV
-        env:
-          GITHUB_ACTOR: ${{ github.actor }}
-
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/$LOWER_ACTOR/${{ vars.IMAGE_NAME }}:${{ env.TAG }} .
+          docker build -t ghcr.io/${{ env.IMAGE_REPO }}/${{ env.IMAGE_NAME }}:${{ env.APP_VERSION }} .
 
       - name: Push Docker image
         run: |
-          docker push ghcr.io/$LOWER_ACTOR/${{ vars.IMAGE_NAME }}:${{ env.TAG }}
+          docker push ghcr.io/${{ env.IMAGE_REPO }}/${{ env.IMAGE_NAME }}:${{ env.APP_VERSION }}
