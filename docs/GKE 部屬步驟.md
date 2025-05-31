@@ -25,6 +25,16 @@ gcloud components install kubectl
 ### 🚀 建立 GKE 叢集（Cluster）
 
 ```bash
+gcloud container clusters create-auto steve-autopilot-cluster --region=asia-east1
+```
+
+參數說明：
+
+- `create-auto`：代表建立 Autopilot 叢集
+- `--region`： 建議用 region（如 asia-east1），Autopilot 只支援 regional cluster
+- 不需指定節點數，Google 會自動管理
+
+```bash
 gcloud container clusters create steve-cluster \
   --zone=asia-east1-a \
   --num-nodes=1 \
