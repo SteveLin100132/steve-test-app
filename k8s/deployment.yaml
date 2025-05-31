@@ -17,7 +17,7 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: steve-test-app-api
-          image: ghcr.io/stevelin100132/steve-test-app:1.0.2
+          image: ghcr.io/stevelin100132/steve-test-app:1.0.3
           ports:
             - containerPort: 3000
           envFrom:
