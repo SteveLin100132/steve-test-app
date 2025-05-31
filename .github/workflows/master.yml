@@ -88,8 +88,12 @@ jobs:
 
       - name: Update GitHub variable
         run: |
-          gh api -X PATCH "repos/${{ github.repository }}/actions/variables/APP_VERSION" \
-            -F name='APP_VERSION' -F value="${{ steps.bump.outputs.new_version }}" \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}"
+          gh api \
+            --method PATCH \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repos/${{ github.repository }}/actions/variables/APP_VERSION \
+            -f name='APP_VERSION' \
+            -f value="${{ steps.bump.outputs.new_version }}"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
