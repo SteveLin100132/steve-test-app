@@ -45,4 +45,4 @@ jobs:
 
       - name: Deploy with kustomize
         run: |
-          kustomize build ./k8s -k ./k8s/kustomization.deploy.yaml | kubectl apply -f -
+          kustomize build ./k8s | kubectl apply -f -
