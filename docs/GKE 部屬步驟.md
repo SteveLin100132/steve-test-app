@@ -88,7 +88,7 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: steve-test-app-api
-          image: ghcr.io/stevelin100132/steve-test-app:1.0.0
+          image: ghcr.io/stevelin100132/steve-test-app # tag 由 kustomize 控制
           ports:
             - containerPort: 3000
           resources:
@@ -173,11 +173,18 @@ kubectl get ingress <ingress-name>
 #### 建立 k8s 資源客製化 YAML
 
 ```yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
 resources:
   - deployment.yaml
   - ingress.yaml
-  - managed-certificate
+  - managed-certificate.yaml
   - service.yaml
+
+images:
+  - name: ghcr.io/stevelin100132/steve-test-app
+    newTag: ${APP_VERSION}
 ```
 
 ---
@@ -228,7 +235,8 @@ gcloud container clusters delete steve-cluster --zone=steve-cluster
 
 ### ⚙️ Google Cloud CD 設定
 
-1. 前往 [IAM 與管理員 → 服務帳戶](https://console.cloud.google.com/iam-admin/serviceaccounts)。
+1. 前往
+   [IAM 與管理員 → 服務帳戶](https://console.cloud.google.com/iam-admin/serviceaccounts)。
 2. 選擇你的專案。
 3. 選擇現有服務帳戶。
 4. 點選「金鑰」分頁 →「新增金鑰」→ 選擇「JSON」→ 建立。
