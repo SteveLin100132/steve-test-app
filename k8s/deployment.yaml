@@ -27,12 +27,12 @@ spec:
                 name: steve-test-app-api-secret
           resources:
             requests:
-              cpu: 100m
+              cpu: 50m
               memory: 64Mi
-              ephemeral-storage: 128Mi
+              ephemeral-storage: 64Mi
             limits:
-              cpu: 100m
+              cpu: 50m
               memory: 64Mi
-              ephemeral-storage: 128Mi
+              ephemeral-storage: 64Mi
       imagePullSecrets:
         - name: ghcr-secret

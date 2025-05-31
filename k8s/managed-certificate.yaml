@@ -4,4 +4,4 @@ metadata:
   name: steve-test-app-api-cert
 spec:
   domains:
-    - 34-8-111-101.nip.io   # 這裡 nip.io 網域
+    - 34-54-233-170.nip.io # 這裡 nip.io 網域
