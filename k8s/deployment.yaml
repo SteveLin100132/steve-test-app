@@ -32,10 +32,10 @@ spec:
               cpu: 100m
               memory: 64Mi
               ephemeral-storage: 128Mi
-            volumeMounts:
-              - name: steve-test-app-api-secret
-                mountPath: "/secrets"
-                readOnly: true
+          volumeMounts:
+            - name: steve-test-app-api-secret
+              mountPath: "/secrets"
+              readOnly: true
       imagePullSecrets:
         - name: ghcr-secret
       volumes:
