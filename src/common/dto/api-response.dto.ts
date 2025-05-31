@@ -15,7 +15,9 @@ import { ApiProperty } from '@nestjs/swagger';
 export function createApiResponseDto<T>(TClass: Type<T>): any {
   // 動態生成類別名稱
   // 如果 TClass 為 undefined，則使用 'ApiResponseDto' 作為預設名稱
-  const className = TClass ? `${TClass.name}ApiResponseDto` : 'ApiResponseDto';
+  const className = TClass
+    ? `${TClass.name.replace('Dto', '')}WithApiResponseDto`
+    : 'ApiResponseDto';
 
   /**
    * 通用 API 回應 DTO，用於標準化 HTTP 回應格式。
