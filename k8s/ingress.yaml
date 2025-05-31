@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: steve-test-app-api-ingress
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+    networking.gke.io/managed-certificates: steve-test-app-api-cert
+spec:
+  rules:
+    - host: 34-8-111-101.nip.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: steve-test-app-api-service
+                port:
+                  number: 80
