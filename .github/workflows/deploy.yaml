@@ -38,6 +38,11 @@ jobs:
         run: |
           gcloud components install gke-gcloud-auth-plugin --quiet
 
-      - name: Apply k8s manifests
+      - name: Replace APP_VERSION in kustomization.yaml
         run: |
-          kubectl apply -k ./k8s
+          export APP_VERSION=${{ env.APP_VERSION }}
+          envsubst < ./k8s/kustomization.yaml > ./k8s/kustomization.deploy.yaml
+
+      - name: Deploy with kustomize
+        run: |
+          kustomize build ./k8s -k ./k8s/kustomization.deploy.yaml | kubectl apply -f -
