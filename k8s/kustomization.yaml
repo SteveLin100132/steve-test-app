@@ -1,5 +1,5 @@
 resources:
   - deployment.yaml
   - ingress.yaml
-  - managed-certificate
+  - managed-certificate.yaml
   - service.yaml
