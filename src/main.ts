@@ -19,15 +19,26 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   // 設定 Swagger 文件
+  const apiDocDescription =
+    'The API description<br><a href="/swagger-json" target="_blank">OpenAPI Spec JSON</a>';
   const config = new DocumentBuilder()
     .setTitle('Steve APP example')
-    .setDescription('The API description')
+    .setDescription(apiDocDescription)
     .setVersion('1.0')
     .build();
-  const documentFactory = () => SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, documentFactory);
+  const document = SwaggerModule.createDocument(app, config);
 
-  // 設定全域攔截器，用於統一處理 API 回應
+  // 提供 /swagger-json 路徑給 Swagger UI 讀取 OpenAPI spec
+  app.use('/swagger-json', (req, res) => res.json(document));
+
+  // 設定 Swagger UI 在根目錄，並指定 spec 路徑
+  SwaggerModule.setup('/', app, document, {
+    swaggerOptions: {
+      url: '/swagger-json',
+    },
+  });
+
+  // 設定全域攔截器與例外處理
   app.useGlobalInterceptors(new ResponseInterceptor());
   app.useGlobalFilters(new AllExceptionsFilter());
 
