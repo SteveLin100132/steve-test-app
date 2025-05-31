@@ -1,6 +1,6 @@
 # GitHub Actions Secrets 說明
 
-## 1. `${{ secrets.CR_PAT }}`
+## 🔑 `${{ secrets.CR_PAT }}`
 
 - **用途**：用於 Docker 登入 GitHub Container
   Registry（ghcr.io），讓 workflow 有權限推送/拉取私有映像。
@@ -17,7 +17,7 @@
 
 ---
 
-## 2. `${{ secrets.GITHUB_TOKEN }}`
+## 🔑 `${{ secrets.GITHUB_TOKEN }}`
 
 - **用途**：GitHub Actions 內建自動產生的權杖，讓 workflow 可以安全地呼叫 GitHub
   API（如修改 repo variable、建立 release、發 issue 等）。
@@ -29,7 +29,7 @@
     `Settings → Actions → General → Workflow permissions`  
     勾選 **"Read and write permissions"**。
 
-## 3. `${{ secrets.GH_PAT }}`
+## 🔑 `${{ secrets.GH_PAT }}`
 
 - **用途**：當你需要在 GitHub Actions workflow 內用 `gh` CLI 修改 repository
   variable（如自動升級 APP_VERSION），建議使用 Personal Access Token（PAT）作為
