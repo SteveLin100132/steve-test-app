@@ -26,8 +26,9 @@ gcloud components install kubectl
 
 ```bash
 gcloud container clusters create steve-cluster \
-  --zone=asia-east1 \
-  --num-nodes=1
+  --zone=asia-east1-a \
+  --num-nodes=1 \
+  --machine-type=e2-medium
 ```
 
 參數說明：
@@ -35,6 +36,31 @@ gcloud container clusters create steve-cluster \
 - my-cluster：叢集名稱
 - --zone：指定地區（也可用 --region）
 - --num-nodes：節點數量
+- --machine-type：機型，對應不同節點的 CPU 和記憶體
+
+常見機型：
+
+| 機型          | vCPU | 記憶體 (GB) |
+| ------------- | ---- | ----------- |
+| e2-micro      | 2    | 1           |
+| e2-small      | 2    | 2           |
+| e2-medium     | 2    | 4           |
+| e2-standard-4 | 4    | 16          |
+| n1-standard-1 | 1    | 3.75        |
+| n1-standard-2 | 2    | 7.5         |
+| n1-standard-4 | 4    | 15          |
+| n2-standard-2 | 2    | 8           |
+| n2-standard-4 | 4    | 16          |
+
+---
+
+### 🔗 取得叢集憑證並設定 kubectl
+
+```bash
+gcloud container clusters get-credentials steve-cluster --zone=asia-east1-a
+```
+
+這會將叢集的憑證加到 `~/.kube/config`，讓你可以用 `kubectl` 操作叢集。
 
 ---
 
@@ -51,16 +77,6 @@ kubectl create secret docker-registry ghcr-secret \
 ```
 
 📌 建議命名為 `ghcr-secret`，也可以自定義。
-
----
-
-### 🔗 取得叢集憑證並設定 kubectl
-
-```bash
-gcloud container clusters get-credentials my-cluster --zone=us-central1-a
-```
-
-這會將叢集的憑證加到 `~/.kube/config`，讓你可以用 `kubectl` 操作叢集。
 
 ---
 
@@ -227,7 +243,7 @@ kubectl get pods
 - 自動關閉叢集：測試完畢後記得刪除叢集以節省費用。
 
 ```bash
-gcloud container clusters delete steve-cluster --zone=steve-cluster
+gcloud container clusters delete steve-cluster --zone=asia-east1-a
 ```
 
 使用 Autopilot 模式：GKE Autopilot 可以讓 Google 自動管理節點（較適合新手）。
