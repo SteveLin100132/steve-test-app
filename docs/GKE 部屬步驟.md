@@ -25,7 +25,7 @@ gcloud components install kubectl
 ### 🚀 建立 GKE 叢集（Cluster）
 
 ```bash
-gcloud container clusters create-auto steve-autopilot-cluster --region=asia-east1
+gcloud container clusters create-auto steve-cluster --region=asia-east1
 ```
 
 參數說明：
@@ -67,7 +67,7 @@ gcloud container clusters create steve-cluster \
 ### 🔗 取得叢集憑證並設定 kubectl
 
 ```bash
-gcloud container clusters get-credentials steve-cluster --zone=asia-east1-a
+gcloud container clusters get-credentials steve-cluster --zone=asia-east1
 ```
 
 這會將叢集的憑證加到 `~/.kube/config`，讓你可以用 `kubectl` 操作叢集。
@@ -253,7 +253,7 @@ kubectl get pods
 - 自動關閉叢集：測試完畢後記得刪除叢集以節省費用。
 
 ```bash
-gcloud container clusters delete steve-cluster --zone=asia-east1-a
+gcloud container clusters delete steve-cluster --zone=asia-east1
 ```
 
 使用 Autopilot 模式：GKE Autopilot 可以讓 Google 自動管理節點（較適合新手）。
