@@ -36,6 +36,7 @@ export class AppController {
   })
   ping(): PingResponseDto {
     return {
+      id: this.appService.getAppId(),
       version: this.appService.getAppVersion(),
     };
   }
