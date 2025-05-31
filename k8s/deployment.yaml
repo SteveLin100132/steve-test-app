@@ -23,6 +23,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: steve-test-app-api-config
+            - secretRef:
+                name: steve-test-app-api-secret
           resources:
             requests:
               cpu: 100m
