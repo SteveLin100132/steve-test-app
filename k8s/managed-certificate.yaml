@@ -1,7 +1,0 @@
-apiVersion: networking.gke.io/v1
-kind: ManagedCertificate
-metadata:
-  name: steve-test-app-api-cert
-spec:
-  domains:
-    - 34-8-111-101.nip.io   # 這裡 nip.io 網域
