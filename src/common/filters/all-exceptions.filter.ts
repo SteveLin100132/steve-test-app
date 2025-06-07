@@ -41,16 +41,21 @@ export class AllExceptionsFilter implements ExceptionFilter {
    * 回應標準化的 JSON 結構，包含 success、code、message、errors、timestamp 與 traceId。
    */
   catch(exception: unknown, host: ArgumentsHost) {
+    // 取得請求與回應物件
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
 
+    // 生成唯一的 traceId 與時間戳記
     const traceId = uuidv4();
     const timestamp = new Date().toISOString();
+    response.setHeader('X-Trace-Id', traceId);
 
+    // 預設錯誤回應的狀態碼、訊息與錯誤細節
     let status = HttpStatus.INTERNAL_SERVER_ERROR;
     let message = 'Internal server error';
     let errors = null;
 
+    // 根據例外型別設定狀態碼、訊息與錯誤細節
     if (exception instanceof HttpException) {
       status = exception.getStatus();
       const res = exception.getResponse();
