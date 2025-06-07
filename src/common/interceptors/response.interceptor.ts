@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
  * 一個攔截器，用於統一 API 回應格式，將回傳資料包裝在一致的結構中，
  * 並加入如成功狀態、HTTP 狀態碼、訊息、時間戳記及追蹤 ID 等中繼資料。
  *
+ * @class
  * @template T 回應資料的型別。
  * @implements {NestInterceptor<T, any>}
  *
@@ -35,8 +36,14 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, any> {
    *   - traceId: 請求追蹤用的唯一識別碼。
    */
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-    const traceId = uuidv4(); // 可改為從 header 取值
+    // 將 traceId 加入 response header
+    const traceId = uuidv4();
     const now = new Date().toISOString();
+
+    // 將 traceId 加入 response header
+    const ctx = context.switchToHttp();
+    const response = ctx.getResponse();
+    response.setHeader('X-Trace-Id', traceId);
 
     return next.handle().pipe(
       map(data => ({
