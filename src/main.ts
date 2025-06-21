@@ -1,6 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { AllExceptionsFilter, ResponseInterceptor } from 'src/common';
+import {
+  AllExceptionsFilter,
+  ResponseInterceptor,
+  prometheusRegistry,
+} from 'src/common';
 import { Log4jsLoggerService } from 'src/logger';
 import { AppModule } from './app.module';
 
@@ -45,6 +49,12 @@ async function bootstrap() {
   // 設定全域攔截器與例外處理
   app.useGlobalInterceptors(new ResponseInterceptor());
   app.useGlobalFilters(new AllExceptionsFilter());
+
+  // 提供 /metrics endpoint 讓 Prometheus 抓取 metrics
+  app.use('/metrics', async (req, res) => {
+    res.setHeader('Content-Type', prometheusRegistry.contentType);
+    res.end(await prometheusRegistry.metrics());
+  });
 
   // 啟動應用程式，監聽指定的埠號
   await app.listen(process.env.PORT ?? 3000);
