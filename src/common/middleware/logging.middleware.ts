@@ -1,5 +1,7 @@
-import { Injectable, Logger, NestMiddleware } from '@nestjs/common';
+import { Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
+import * as log4js from 'log4js';
+import { initLog4js } from '../config';
 
 /**
  * 中介軟體，用於記錄 API 請求和回應的日誌。
@@ -9,9 +11,22 @@ import { NextFunction, Request, Response } from 'express';
 @Injectable()
 export class LoggingMiddleware implements NestMiddleware {
   /**
-   * 日誌記錄器實例，用於輸出 API 請求和回應的日誌。
+   * 靜態屬性，用於確保 log4js 只初始化一次。
    */
-  private readonly logger = new Logger('API');
+  private static loggerInitialized = false;
+  /**
+   * log4js 記錄器實例，用於輸出 API 請求和回應的日誌。
+   */
+  private readonly logger: log4js.Logger;
+
+  constructor() {
+    // 如果 log4js 尚未初始化，則進行初始化
+    if (!LoggingMiddleware.loggerInitialized) {
+      initLog4js();
+      LoggingMiddleware.loggerInitialized = true;
+    }
+    this.logger = log4js.getLogger('API');
+  }
 
   /**
    * 記錄請求和回應的日誌
@@ -28,9 +43,8 @@ export class LoggingMiddleware implements NestMiddleware {
     const traceId = String(res.getHeader('X-Trace-Id') || 'not-set');
 
     // 輸出日誌，包含請求方法、原始 URL、狀態碼和追蹤 ID
-    this.logger.log(
-      `${method} ${originalUrl} - Status: ${statusCode} - TraceId: ${traceId}`,
-    );
+    const logMessage = `${method} ${originalUrl} - Status: ${statusCode} - TraceId: ${traceId}`;
+    this.logger.info(logMessage);
   }
 
   /**

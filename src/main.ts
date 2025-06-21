@@ -1,7 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { AllExceptionsFilter, ResponseInterceptor } from 'src/common';
+import { Log4jsLoggerService } from 'src/logger';
 import { AppModule } from './app.module';
-import { AllExceptionsFilter, ResponseInterceptor } from './common';
 
 /**
  * 啟動 NestJS 應用程式。
@@ -15,8 +16,11 @@ import { AllExceptionsFilter, ResponseInterceptor } from './common';
  * @returns {Promise<void>} 應用啟動後回傳的 Promise。
  */
 async function bootstrap() {
-  // 建立 NestJS 應用程式
-  const app = await NestFactory.create(AppModule);
+  // 建立 NestJS 應用程式，關閉預設 logger
+  const app = await NestFactory.create(AppModule, { logger: false });
+
+  // 設定全域中介軟體，使用 log4js 記錄 API 請求與回應
+  app.useLogger(new Log4jsLoggerService());
 
   // 設定 Swagger 文件
   const apiDocDescription =
