@@ -1,98 +1,89 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Steve Test App
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+一個基於 [NestJS](https://nestjs.com/)
+框架的 TypeScript 伺服器端應用程式範例，結合 log4js 日誌管理，適合學習與實作高效能、可擴展的 Node.js 應用。
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 目錄結構
 
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Project setup
-
-```bash
-$ npm install
+```
+src/
+  app.controller.ts         // 主要 API 控制器
+  app.module.ts             // 主模組
+  app.service.ts            // 服務層
+  main.ts                   // 入口點
+  common/                   // 共用元件（config, dto, filters, interceptors, middleware）
+  config/logger.config.json // log4js 設定檔
+  logger/                   // log4js 整合模組與服務
+test/                       // 測試
 ```
 
-## Compile and run the project
+## .env 設定
 
-```bash
-# development
-$ npm run start
+專案支援以 `.env` 檔案管理環境變數，常見設定如下：
 
-# watch mode
-$ npm run start:dev
+```
+# 伺服器監聽埠
+PORT=3000
 
-# production mode
-$ npm run start:prod
+# 範例：資料庫連線字串
+# DATABASE_URL=postgres://user:password@localhost:5432/dbname
+
+# 範例：Log 等級
+# LOG_LEVEL=info
 ```
 
-## Run tests
+請依需求於專案根目錄建立 `.env` 檔案，並於 `main.ts` 或相關設定檔載入（建議使用
+[@nestjs/config](https://docs.nestjs.com/techniques/configuration) 套件）。
+
+## 安裝
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm install
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+## 開發與執行
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+# 開發模式
+npm run start
+
+# 監聽檔案變更（熱重載）
+npm run start:dev
+
+# 生產模式
+npm run start:prod
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## 測試
 
-## Resources
+```bash
+# 單元測試
+npm run test
 
-Check out a few resources that may come in handy when working with NestJS:
+# e2e 測試
+npm run test:e2e
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+# 測試覆蓋率
+npm run test:cov
+```
 
-## Support
+## 日誌管理
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+本專案採用 [log4js](https://github.com/log4js-node/log4js-node)
+作為日誌系統，設定檔位於
+`src/config/logger.config.json`，可依需求調整日誌輸出格式與等級。
 
-## Stay in touch
+## 部署
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+請參考 [NestJS 官方部署文件](https://docs.nestjs.com/deployment)
+進行生產環境部署。
 
-## License
+## 相關資源
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- [NestJS 官方文件](https://docs.nestjs.com/)
+- [log4js 文件](https://log4js-node.github.io/log4js-node/)
+- [TypeScript 文件](https://www.typescriptlang.org/docs/)
+
+## 授權
+
+本專案採用 MIT 授權。
