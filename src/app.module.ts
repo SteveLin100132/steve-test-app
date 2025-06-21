@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LoggingMiddleware } from './common';
+import { GracefulShutdownModule } from './graceful-shutdown';
 
 /**
  * 應用程式的根模組。
@@ -15,6 +16,7 @@ import { LoggingMiddleware } from './common';
       isGlobal: true,
       envFilePath: '.env',
     }),
+    GracefulShutdownModule,
   ],
   controllers: [AppController],
   providers: [AppService],
