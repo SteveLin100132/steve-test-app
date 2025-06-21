@@ -58,6 +58,9 @@ async function bootstrap() {
 
   // 啟動應用程式，監聽指定的埠號
   await app.listen(process.env.PORT ?? 3000);
+
+  // 啟用 NestJS 內建的 graceful shutdown
+  app.enableShutdownHooks();
 }
 
 void bootstrap();
