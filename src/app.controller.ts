@@ -1,11 +1,8 @@
 import { Controller, Get } from '@nestjs/common';
 import { ApiInternalServerErrorResponse, ApiOkResponse } from '@nestjs/swagger';
+import { PingResponseDto } from './app';
 import { AppService } from './app.service';
-import {
-  createApiResponseDto,
-  PingResponseDto,
-  ServerInternalErrorResponseDto,
-} from './common';
+import { createApiResponseDto, ServerInternalErrorResponseDto } from './common';
 
 /**
  * 處理應用程式根路由的控制器。
